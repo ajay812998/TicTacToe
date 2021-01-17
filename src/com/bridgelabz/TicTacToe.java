@@ -22,6 +22,7 @@ public class TicTacToe {
 		Scanner scan = new Scanner(System.in);
 		while (true) {
 			System.out.println("Enter a slot to place " + player);
+			System.out.println("Free Space available");
 			int slot = scan.nextInt();
 			if (slot >= 1 && slot <= 9) {
 				if (board[slot] == ' ') {
