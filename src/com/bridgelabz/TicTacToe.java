@@ -1,6 +1,5 @@
 package com.bridgelabz;
 
-import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -45,6 +44,7 @@ public class TicTacToe {
 		}
 	}
 
+	
 	private static String checkWinner() {
 		for (int i = 0; i < 8; i++) {
 			String line = null;
@@ -96,6 +96,7 @@ public class TicTacToe {
 		return toss.nextInt(2);
 	}
 
+	
 	private static void makeaMove() {
 		Scanner scan = new Scanner(System.in);
 		char entry;
@@ -103,9 +104,13 @@ public class TicTacToe {
 			entry = player;
 		else
 			entry = computer;
+		int slot = 0;
 		while (true) {
-			System.out.println("Enter a slot to place " + entry);
-			int slot = scan.nextInt();
+			if (User == 0) {
+				System.out.println("Enter a slot to place " + entry);
+				slot = scan.nextInt();
+			} else
+				slot = checkWinningMove();
 			if (slot >= 1 && slot <= 9) {
 				if (isSpaceFree(slot)) {
 					board[slot] = entry;
@@ -121,10 +126,81 @@ public class TicTacToe {
 
 	}
 
+	
+	private static int checkWinningMove() {
+		Random random = new Random();
+		int randomValue = random.nextInt(9) + 1;
+		char[] boardCopy = board;
+		for (int j = 1; j < 10; j++) {
+			if (isSpaceFree(j)) {
+				String[] line = new String[4];
+				switch (j) {
+				case 1:
+					line[0] = boardCopy[1] + "" + boardCopy[2] + "" + boardCopy[3];
+					line[1] = boardCopy[1] + "" + boardCopy[4] + "" + boardCopy[7];
+					line[2] = boardCopy[1] + "" + boardCopy[5] + "" + boardCopy[9];
+					break;
+				case 2:
+					line[0] = boardCopy[2] + "" + boardCopy[5] + "" + boardCopy[8];
+					line[1] = boardCopy[1] + "" + boardCopy[2] + "" + boardCopy[3];
+					line[2] = "";
+					break;
+				case 3:
+					line[0] = boardCopy[3] + "" + boardCopy[5] + "" + boardCopy[7];
+					line[1] = boardCopy[3] + "" + boardCopy[6] + "" + boardCopy[9];
+					line[2] = boardCopy[3] + "" + boardCopy[6] + "" + boardCopy[9];
+					break;
+				case 4:
+					line[0] = boardCopy[1] + "" + boardCopy[4] + "" + boardCopy[7];
+					line[1] = boardCopy[4] + "" + boardCopy[5] + "" + boardCopy[6];
+					line[2] = "";
+					break;
+				case 5:
+					line[0] = boardCopy[2] + "" + boardCopy[5] + "" + boardCopy[8];
+					line[1] = boardCopy[1] + "" + boardCopy[5] + "" + boardCopy[9];
+					line[2] = boardCopy[3] + "" + boardCopy[5] + "" + boardCopy[7];
+					break;
+				case 6:
+					line[0] = boardCopy[3] + "" + boardCopy[6] + "" + boardCopy[9];
+					line[1] = boardCopy[4] + "" + boardCopy[5] + "" + boardCopy[6];
+					line[2] = "";
+					break;
+				case 7:
+					line[0] = boardCopy[1] + "" + boardCopy[4] + "" + boardCopy[7];
+					line[1] = boardCopy[3] + "" + boardCopy[5] + "" + boardCopy[7];
+					line[2] = boardCopy[7] + "" + boardCopy[8] + "" + boardCopy[9];
+					break;
+				case 8:
+					line[0] = boardCopy[2] + "" + boardCopy[5] + "" + boardCopy[8];
+					line[1] = boardCopy[7] + "" + boardCopy[8] + "" + boardCopy[9];
+					line[2] = "";
+					break;
+				case 9:
+					line[0] = boardCopy[1] + "" + boardCopy[5] + "" + boardCopy[9];
+					line[1] = boardCopy[7] + "" + boardCopy[8] + "" + boardCopy[9];
+					line[2] = boardCopy[3] + "" + boardCopy[6] + "" + boardCopy[9];
+					break;
+				}
+				for (int i = 0; i < 3; i++) {
+					if (line[i].equals(computer + "" + computer + "" + computer)) {
+						return j;
+					} else
+						return randomValue;
+				}
+			}
+		}
+		return 0;
+	}
+
+	public static int playComputerMove() {
+		return 0;
+	}
+
 	public static boolean isSpaceFree(int index) {
 		return board[index] == ' ';
 	}
 
+	
 	private static void showBoard() {
 		for (int i = 1; i < board.length; i = i + 3) {
 			System.out.println("|" + board[i] + " |" + board[i + 1] + " |" + board[i + 2] + " |");
@@ -132,6 +208,7 @@ public class TicTacToe {
 		}
 	}
 
+	
 	private static void selectXorO() {
 		Scanner scan = new Scanner(System.in);
 		while (true) {
@@ -147,6 +224,7 @@ public class TicTacToe {
 		}
 	}
 
+	
 	static void populateBoard() {
 		for (int i = 1; i < 10; i++) {
 			board[i] = ' ';
