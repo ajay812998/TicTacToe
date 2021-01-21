@@ -11,7 +11,7 @@ public class TicTacToe {
 	static int playerId = 0;
 	static int computerId = 1;
 
-	    public static void main(String[] args) {
+	public static void main(String[] args) {
 		System.out.println("Welcome to TicTacToe");
 		populateBoard();
 		selectXorO();
@@ -22,6 +22,7 @@ public class TicTacToe {
 
 	}
 
+	
 	public static void playGame() {
 		String winner = "";
 		while (winner == "") {
@@ -102,6 +103,7 @@ public class TicTacToe {
 
 	}
 
+	
 	private static void makeaMove() {
 		Scanner scan = new Scanner(System.in);
 		char entry;
@@ -217,32 +219,68 @@ public class TicTacToe {
 		}
 	}
 
+	
 	private static int moveToBlockOpponent() {
-		Random random = new Random();
-		int randomValue = random.nextInt(9) + 1;
 		int blockingMove = findWinningMove(playerId);
 		if (blockingMove > 0) {
 			return blockingMove;
 		} else {
-			return randomValue;
+			return selectOneCorner();
 		}
 	}
 
-	public static int playComputerMove() {
-		return 0;
+	
+	private static int selectOneCorner() {
+	    if (isSpaceFree(1))
+			return 1;
+		else if (isSpaceFree(3))
+			return 3;
+		else if (isSpaceFree(7))
+			return 7;
+		else if (isSpaceFree(9))
+			return 9;
+		else
+			return checkIfCentreIsFree();
+	}
+
+	
+	private static int checkIfCentreIsFree() {
+		if (isSpaceFree(5))
+			return 5;
+		else
+			return checkIfAnySideIsFree();
+	}
+
+	
+	private static int checkIfAnySideIsFree() {
+		Random random = new Random();
+		int randomValue = random.nextInt(9) + 1;
+		if (isSpaceFree(2))
+			return 2;
+		else if (isSpaceFree(4))
+			return 4;
+		else if (isSpaceFree(6))
+			return 6;
+		else if (isSpaceFree(8))
+			return 8;
+		else
+			return randomValue;
 	}
 
 	public static boolean isSpaceFree(int index) {
 		return board[index] == ' ';
 	}
 
+	
 	private static void showBoard() {
 		for (int i = 1; i < board.length; i = i + 3) {
 			System.out.println("|" + board[i] + " |" + board[i + 1] + " |" + board[i + 2] + " |");
 			System.out.println("-----------");
 		}
+		System.out.println();
 	}
 
+	
 	private static void selectXorO() {
 		Scanner scan = new Scanner(System.in);
 		while (true) {
@@ -258,6 +296,7 @@ public class TicTacToe {
 		}
 	}
 
+	
 	static void populateBoard() {
 		for (int i = 1; i < 10; i++) {
 			board[i] = ' ';
