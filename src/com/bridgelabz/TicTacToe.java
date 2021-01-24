@@ -13,17 +13,33 @@ public class TicTacToe {
 
 	public static void main(String[] args) {
 		System.out.println("Welcome to TicTacToe");
+		playGame();
+	}
+
+	private static void askIfWantToPlayAgain() {
+		Scanner scan = new Scanner(System.in);
+		String choice = null;
+		int end = 0;
+		while (end == 0) {
+			System.out.println("Enter YES/yes if you want to play again OR Enter NO/no if you want to exit ");
+			choice = scan.next().toUpperCase();
+			System.out.println(choice);
+			if (choice.equals("YES")) {
+				playGame();
+			} else if (choice.equals("NO")) {
+				end = 1;
+			} else {
+				System.out.println("Invalid choice,Enter again");
+			}
+		}
+	}
+
+	public static void playGame() {
 		populateBoard();
 		selectXorO();
 		System.out.println(player + " is player " + computer + " is computer");
 		showBoard();
 		tossToDecideWhoPlaysFirst();
-		playGame();
-
-	}
-
-	
-	public static void playGame() {
 		String winner = "";
 		while (winner == "") {
 			makeaMove();
@@ -44,9 +60,9 @@ public class TicTacToe {
 			else
 				User = 0;
 		}
+		askIfWantToPlayAgain();
 	}
 
-	
 	private static String checkWinner() {
 		for (int i = 0; i < 8; i++) {
 			String line = null;
@@ -103,7 +119,6 @@ public class TicTacToe {
 
 	}
 
-	
 	private static void makeaMove() {
 		Scanner scan = new Scanner(System.in);
 		char entry;
@@ -133,7 +148,6 @@ public class TicTacToe {
 
 	}
 
-	
 	private static int findWinningMove(int checkingWinFor) {
 		char[] boardCopy = new char[board.length];
 		for (int i = 1; i < board.length; i++) {
@@ -219,7 +233,6 @@ public class TicTacToe {
 		}
 	}
 
-	
 	private static int moveToBlockOpponent() {
 		int blockingMove = findWinningMove(playerId);
 		if (blockingMove > 0) {
@@ -229,9 +242,8 @@ public class TicTacToe {
 		}
 	}
 
-	
 	private static int selectOneCorner() {
-	    if (isSpaceFree(1))
+		if (isSpaceFree(1))
 			return 1;
 		else if (isSpaceFree(3))
 			return 3;
@@ -243,7 +255,6 @@ public class TicTacToe {
 			return checkIfCentreIsFree();
 	}
 
-	
 	private static int checkIfCentreIsFree() {
 		if (isSpaceFree(5))
 			return 5;
@@ -251,7 +262,6 @@ public class TicTacToe {
 			return checkIfAnySideIsFree();
 	}
 
-	
 	private static int checkIfAnySideIsFree() {
 		Random random = new Random();
 		int randomValue = random.nextInt(9) + 1;
@@ -271,7 +281,6 @@ public class TicTacToe {
 		return board[index] == ' ';
 	}
 
-	
 	private static void showBoard() {
 		for (int i = 1; i < board.length; i = i + 3) {
 			System.out.println("|" + board[i] + " |" + board[i + 1] + " |" + board[i + 2] + " |");
@@ -280,7 +289,6 @@ public class TicTacToe {
 		System.out.println();
 	}
 
-	
 	private static void selectXorO() {
 		Scanner scan = new Scanner(System.in);
 		while (true) {
@@ -296,10 +304,10 @@ public class TicTacToe {
 		}
 	}
 
-	
 	static void populateBoard() {
 		for (int i = 1; i < 10; i++) {
 			board[i] = ' ';
 		}
 	}
 }
+				
